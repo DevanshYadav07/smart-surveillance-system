@@ -1,0 +1,22 @@
+div
+{
+  padding: 30px;
+  text-align: center;
+
+}
+.row
+{
+  align-content: center;
+  padding:5px;
+}
+input
+{
+  height: 30px;
+  width: 300px;
+  font-size: 20px;
+  text-align:left;
+}
+button 
+{
+  font-size: 20px;
+}
