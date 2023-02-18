@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera</title>
+   <link rel="stylesheet" href='../static/styles.css'>
+</head>
+<body>
+    <div class="heading">
+        <img src="{{url_for('static',filename='Images/Logo.png')}}" alt="heading">
+    </div>
+    <div class="camera-screen">
+        <div></div>
+        <img src="{{ url_for('video_feed') }}">
+        
+    </div>
+    
+</body>
+</html>

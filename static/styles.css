@@ -1,0 +1,26 @@
+body{
+    background-color: black;
+    
+}
+.heading 
+{
+    width: 100px;
+    height: 50px;
+    align-items: center;
+}
+h1{
+    color:red ;
+    text-align: center;
+
+}
+/* camera screen */
+/* .camera-screen
+{
+   
+
+}
+ */
+img{
+    height: 400px;
+    width: 50%;
+}
