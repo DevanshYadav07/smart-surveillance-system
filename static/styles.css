@@ -1,26 +1,26 @@
-body{
-    background-color: black;
+
+body {
+    background-color: #010101;
+    width: 1400px;
+}
+
+#image1 {
+    width: 1400px;
+    margin: 40px auto auto 140px;
+}
+
+#image2 {
+    width: 1400px;
+    margin: 120px auto auto 140px;
+}
+.camera-screen{
+    display: flex;
+    /* align-items: center;
+    justify-content:center; */
     
 }
-.heading 
+/* CAMERA */
+#camera
 {
-    width: 100px;
-    height: 50px;
-    align-items: center;
-}
-h1{
-    color:red ;
-    text-align: center;
-
-}
-/* camera screen */
-/* .camera-screen
-{
-   
-
-}
- */
-img{
-    height: 400px;
-    width: 50%;
+    width:60%;
 }

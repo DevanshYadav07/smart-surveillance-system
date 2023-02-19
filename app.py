@@ -1,18 +1,31 @@
+import cloudinary.uploader
+import cloudinary.utils
+#import winsound
 from flask import Flask, Response, render_template
 import cv2
-from playsound import playsound
+# from playsound import playsound
 app = Flask(__name__)
 import requests
-# import twilio
-# from twilio.rest import Client
-# Load the face detection classifier
+import twilio
+from twilio.rest import Client
+cloudinary.config(
+  cloud_name = "dymtzczdp",
+  api_key = "278794557333869",
+  api_secret = "wOtWveO_aixYQh89yRo7ZY6XOpw"
+)
+
+
+alarm_duration=5
+frequency=2500
+duration=1000
+# Load the face detection classifier tejus JUYAL
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 
 
-# regin of interest
-top_left = (150, 150)
-bottom_right = (450, 450)
+# regin of interest by devansh
+top_left = (400, 50)
+bottom_right = (800, 550)
 
 # Open the camera
 cap = cv2.VideoCapture(0)
@@ -22,14 +35,16 @@ duration = 1000
 # Set the alarm duration in seconds
 alarm_duration = 5
 
-account_sid="ACbbbe08628a31e86c22d0ef947a27a508"
-auth_token="1f366b5226c2f3b727cc484cf22c3714"
+#      twilio credtial of AYUSH
+account_sid="AC535ba97d039a980d56d7a80fb2d894b5"
+auth_token="ce25f78334ed574c4aaef9ee858fccf7"
 
-
-# client=Client(account_sid,auth_token)
+client=Client(account_sid,auth_token)
 # sending the image to user by devansh
-to_whatsapp_number='whatsapp:+917300789205'
+to_whatsapp_number='whatsapp:+918791391135'
+from_whatsapp_number='whatsapp:+14155238886'
 
+#           ----   TEJUS FUNCTION---
 def generate_frames():
     while True:
         # Read a frame from the camera
@@ -53,33 +68,51 @@ def generate_frames():
                 filename = "intruder.jpg"
                 cv2.imwrite(filename, frame)
                 # twilio sms alert
-                # message=client.messages.create(
-                # body="Alert Intrusion detected at your premise",
-                # from_="+16816801434",
-                # to="+917300789205"
-                # )
+                message=client.messages.create(
+                body="Alert Intrusion detected at your premise",
+                from_="+19523730493",
+                to="+918791391135"
+                )
 
             
                 print("INTRUDER ALERT")
-                playsound('Beep.mp3')
+
+                # winsound.Beep(frequency, duration)
+                # alarm_duration_countdown = alarm_duration * 100
+                # while alarm_duration_countdown > 0:
+                #     winsound.Beep(frequency, duration)
+                #     alarm_duration_countdown -= 1
+                # playsound('Beep.mp3')
                 # # sending the image to user by devansh
-                # mes=client.messages.create(
-                #     from_='whatsapp:+14155238886',
-                #     body='Intrusion detected using python',
-                #     to=to_whatsapp_number
+                mes=client.messages.create(
+                    from_='whatsapp:+14155238886',
+                    body='Intrusion detected using python',
+                    to=to_whatsapp_number
                     
-                # )
-                # # # image url
-                # image_url='http://127.0.0.1:5000/intruder.jpg'
-                # Response=requests.get(image_url)
+                )
+                # # image url
+                image_url='http://127.0.0.1:5000/intruder.jpg'
+                Response=requests.get(image_url)
+                
+                upload_result = cloudinary.uploader.upload("intruder.jpg")
+                public_id = upload_result['public_id']
+                secure_url, options = cloudinary.utils.cloudinary_url(public_id, secure=True)
 
-                # client.messages.create(
-                #     from_='whatsapp:+14155238886',
-                #     body='tejus is theif',
-                #     media_url=Response.url,
-                #     to=to_whatsapp_number
+                message=client.messages.create(
+                media_url=secure_url,
+                from_=from_whatsapp_number,
+                to=to_whatsapp_number
+                )
 
-                # )
+
+
+                client.messages.create(
+                    from_='whatsapp:+14155238886',
+                    body='tejus is theif',
+                    media_url=Response.url,
+                    to=to_whatsapp_number
+
+                )
         # Return the frame to the webpage
         frame = cv2.imencode('.jpg', frame)[1].tobytes()
         yield (b'--frame\r\n'
